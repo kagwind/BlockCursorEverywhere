@@ -1,4 +1,4 @@
-# BlockCursorEverywhere
+# BlockCursorEverywhere (forked from karlhorky/BlockCursorEverywhere)
 
 A block cursor for Sublime Text 2 and 3.
 
