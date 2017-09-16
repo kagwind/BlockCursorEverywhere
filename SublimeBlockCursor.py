@@ -21,6 +21,12 @@ class BlockCursorEverywhere(sublime_plugin.EventListener):
         else:
             return os.path.exists(os.path.join(sublime.installed_packages_path(), 'Vintageous.sublime-package'))
 
+    def is_neovintageous_installed(self):
+        if int(sublime.version()) < 3000:
+            return os.path.isdir(os.path.join(sublime.packages_path(), 'NeoVintageous'))
+        else:
+            return os.path.exists(os.path.join(sublime.installed_packages_path(), 'NeoVintageous.sublime-package'))
+
     def is_enabled(self, view, package_name):
         return package_name not in view.settings().get('ignored_packages', [])
 
@@ -45,7 +51,8 @@ class BlockCursorEverywhere(sublime_plugin.EventListener):
 
         self.vintage_enabled = self.is_enabled(view, 'Vintage')
         self.vintageous_enabled = self.is_vintageous_installed() and self.is_enabled(view, 'Vintageous')
-        self.vi_enabled = self.vintage_enabled or self.vintageous_enabled
+        self.neovintageous_enabled = self.is_neovintageous_installed() and self.is_enabled(view, 'NeoVintageous')
+        self.vi_enabled = self.vintage_enabled or self.vintageous_enabled or self.neovintageous_enabled
 
         self.on_selection_modified(view)
         view.settings().add_on_change('command_mode', self.on_command_mode_change)
